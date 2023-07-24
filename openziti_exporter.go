@@ -21,6 +21,7 @@ import (
 	"os/user"
 	"runtime"
 	"sort"
+	"time"
 
 	"github.com/alecthomas/kingpin/v2"
 	"github.com/enthus-it/openziti_exporter/collector"
@@ -35,6 +36,23 @@ import (
 	"github.com/prometheus/exporter-toolkit/web"
 	"github.com/prometheus/exporter-toolkit/web/kingpinflag"
 )
+
+const (
+	serverReadHeaderTimeout = 60
+)
+
+// handler wraps an unfiltered http.Handler but uses a filtered handler,
+// created on the fly, if filtering is requested. Create instances with
+// newHandler.
+type handler struct {
+	unfilteredHandler http.Handler
+	// exporterMetricsRegistry is a separate registry for the metrics about
+	// the exporter itself.
+	exporterMetricsRegistry *prometheus.Registry
+	includeExporterMetrics  bool
+	maxRequests             int
+	logger                  log.Logger
+}
 
 // ServeHTTP implements http.Handler.
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -51,9 +69,11 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		level.Warn(h.logger).Log("msg", "Couldn't create filtered metrics handler:", "err", err)
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(fmt.Sprintf("Couldn't create filtered metrics handler: %s", err)))
+		fmt.Fprintf(w, "Couldn't create filtered metrics handler: %s", err)
+
 		return
 	}
+
 	filteredHandler.ServeHTTP(w, r)
 }
 
@@ -72,11 +92,14 @@ func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
 	// only once upon startup.
 	if len(filters) == 0 {
 		level.Info(h.logger).Log("msg", "Enabled collectors")
+
 		collectors := []string{}
 		for n := range nc.Collectors {
 			collectors = append(collectors, n)
 		}
+
 		sort.Strings(collectors)
+
 		for _, c := range collectors {
 			level.Info(h.logger).Log("collector", c)
 		}
@@ -84,9 +107,11 @@ func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
 
 	r := prometheus.NewRegistry()
 	r.MustRegister(version.NewCollector("openziti_exporter"))
+
 	if err := r.Register(nc); err != nil {
 		return nil, fmt.Errorf("couldn't register openziti collector: %s", err)
 	}
+
 	handler := promhttp.HandlerFor(
 		prometheus.Gatherers{h.exporterMetricsRegistry, r},
 		promhttp.HandlerOpts{
@@ -96,6 +121,7 @@ func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
 			Registry:            h.exporterMetricsRegistry,
 		},
 	)
+
 	if h.includeExporterMetrics {
 		// Note that we have to use h.exporterMetricsRegistry here to
 		// use the same promhttp metrics for all expositions.
@@ -103,20 +129,8 @@ func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
 			h.exporterMetricsRegistry, handler,
 		)
 	}
-	return handler, nil
-}
 
-// handler wraps an unfiltered http.Handler but uses a filtered handler,
-// created on the fly, if filtering is requested. Create instances with
-// newHandler.
-type handler struct {
-	unfilteredHandler http.Handler
-	// exporterMetricsRegistry is a separate registry for the metrics about
-	// the exporter itself.
-	exporterMetricsRegistry *prometheus.Registry
-	includeExporterMetrics  bool
-	maxRequests             int
-	logger                  log.Logger
+	return handler, nil
 }
 
 func newHandler(includeExporterMetrics bool, maxRequests int, logger log.Logger) *handler {
@@ -132,11 +146,13 @@ func newHandler(includeExporterMetrics bool, maxRequests int, logger log.Logger)
 			promcollectors.NewGoCollector(),
 		)
 	}
+
 	if innerHandler, err := h.innerHandler(); err != nil {
 		panic(fmt.Sprintf("Couldn't create metrics handler: %s", err))
 	} else {
 		h.unfilteredHandler = innerHandler
 	}
+
 	return h
 }
 
@@ -170,6 +186,7 @@ func main() {
 	kingpin.CommandLine.UsageWriter(os.Stdout)
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
+
 	logger := promlog.New(promlogConfig)
 
 	if *disableDefaultCollectors {
@@ -178,13 +195,16 @@ func main() {
 
 	level.Info(logger).Log("msg", "Starting openziti_exporter", "version", version.Info())
 	level.Info(logger).Log("msg", "Build context", "build_context", version.BuildContext())
-	if user, err := user.Current(); err == nil && user.Uid == "0" {
+
+	if currentUser, err := user.Current(); err == nil && currentUser.Uid == "0" {
 		level.Warn(logger).Log("msg", "OpenZiti Exporter is running as root user. This exporter is designed to run as unprivileged user, root is not required.")
 	}
+
 	runtime.GOMAXPROCS(*maxProcs)
 	level.Debug(logger).Log("msg", "Go MAXPROCS", "procs", runtime.GOMAXPROCS(0))
 
 	http.Handle(*metricsPath, newHandler(!*disableExporterMetrics, *maxRequests, logger))
+
 	if *metricsPath != "/" {
 		landingConfig := web.LandingConfig{
 			Name:        "OpenZiti Exporter",
@@ -197,15 +217,20 @@ func main() {
 				},
 			},
 		}
+
 		landingPage, err := web.NewLandingPage(landingConfig)
 		if err != nil {
 			level.Error(logger).Log("err", err)
 			os.Exit(1)
 		}
+
 		http.Handle("/", landingPage)
 	}
 
-	server := &http.Server{}
+	server := &http.Server{
+		ReadHeaderTimeout: serverReadHeaderTimeout * time.Second,
+	}
+
 	if err := web.ListenAndServe(server, toolkitFlags, logger); err != nil {
 		level.Error(logger).Log("err", err)
 		os.Exit(1)

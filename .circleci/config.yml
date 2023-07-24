@@ -1,0 +1,62 @@
+# Golang CircleCI 2.1 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2.1
+
+executors:
+  golang:
+    docker:
+    - image: cimg/go:1.20
+
+jobs:
+  codespell:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+    - checkout
+    - run: pip3 install codespell
+    - run: codespell --skip=".git"
+
+  build:
+    docker:
+    - image: cimg/go:1.20
+    environment:
+    - GHCR_IMAGE_NAME: "ghcr.io/enthus-it/openziti_exporter"
+    steps:
+     # checkout the project
+    - checkout
+
+    # make and test
+    - run:
+        name: Binary Build
+        command: make
+
+    - setup_remote_docker:
+        version: 20.10.14
+        docker_layer_caching: true
+
+    # container build
+    - run:
+        name: Build
+        command: docker build -t $GHCR_IMAGE_NAME -t $GHCR_IMAGE_NAME:$CIRCLE_BRANCH .
+    - run:
+        name: GHCR Login
+        command: echo $GHCR_TOKEN | docker login ghcr.io -u $GHCR_USERNAME --password-stdin
+    - run:
+        name: GHCR Push
+        command: docker push $GHCR_IMAGE_NAME:$CIRCLE_BRANCH
+
+workflows:
+  version: 2
+  openziti_exporter:
+    jobs:
+    - codespell:
+        filters:
+          tags:
+            only: /.*/
+    - build:
+        # This enable the environment variables
+        context: org-global
+        filters:
+          branches:
+            only: main

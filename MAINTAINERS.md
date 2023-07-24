@@ -1,1 +1,1 @@
-* Mario Trangoni <mjtrangoni@gmail.com> @mjtrangoni
+* Mario Trangoni <mario.trangoni@enthus.de> @mjtrangoni

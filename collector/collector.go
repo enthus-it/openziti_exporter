@@ -106,23 +106,30 @@ func collectorFlagAction(collector string) func(ctx *kingpin.ParseContext) error
 // NewOpenZitiCollector creates a new OpenZitiCollector.
 func NewOpenZitiCollector(logger log.Logger, filters ...string) (*OpenZitiCollector, error) {
 	f := make(map[string]bool)
+
 	for _, filter := range filters {
 		enabled, exist := collectorState[filter]
 		if !exist {
 			return nil, fmt.Errorf("missing collector: %s", filter)
 		}
+
 		if !*enabled {
 			return nil, fmt.Errorf("disabled collector: %s", filter)
 		}
+
 		f[filter] = true
 	}
+
 	collectors := make(map[string]Collector)
+
 	initiatedCollectorsMtx.Lock()
 	defer initiatedCollectorsMtx.Unlock()
+
 	for key, enabled := range collectorState {
 		if !*enabled || (len(f) > 0 && !f[key]) {
 			continue
 		}
+
 		if collector, ok := initiatedCollectors[key]; ok {
 			collectors[key] = collector
 		} else {
@@ -134,6 +141,7 @@ func NewOpenZitiCollector(logger log.Logger, filters ...string) (*OpenZitiCollec
 			initiatedCollectors[key] = collector
 		}
 	}
+
 	return &OpenZitiCollector{Collectors: collectors, logger: logger}, nil
 }
 
@@ -147,12 +155,14 @@ func (n OpenZitiCollector) Describe(ch chan<- *prometheus.Desc) {
 func (n OpenZitiCollector) Collect(ch chan<- prometheus.Metric) {
 	wg := sync.WaitGroup{}
 	wg.Add(len(n.Collectors))
+
 	for name, c := range n.Collectors {
 		go func(name string, c Collector) {
 			execute(name, c, ch, n.logger)
 			wg.Done()
 		}(name, c)
 	}
+
 	wg.Wait()
 }
 
@@ -160,6 +170,7 @@ func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.L
 	begin := time.Now()
 	err := c.Update(ch)
 	duration := time.Since(begin)
+
 	var success float64
 
 	if err != nil {
@@ -168,6 +179,7 @@ func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.L
 		} else {
 			level.Error(logger).Log("msg", "collector failed", "name", name, "duration_seconds", duration.Seconds(), "err", err)
 		}
+
 		success = 0
 	} else {
 		level.Debug(logger).Log("msg", "collector succeeded", "name", name, "duration_seconds", duration.Seconds())
@@ -217,26 +229,31 @@ func pushMetric(ch chan<- prometheus.Metric, fieldDesc *prometheus.Desc, name st
 		if val == nil {
 			return
 		}
+
 		fVal = float64(*val)
 	case *uint16:
 		if val == nil {
 			return
 		}
+
 		fVal = float64(*val)
 	case *uint32:
 		if val == nil {
 			return
 		}
+
 		fVal = float64(*val)
 	case *uint64:
 		if val == nil {
 			return
 		}
+
 		fVal = float64(*val)
 	case *int64:
 		if val == nil {
 			return
 		}
+
 		fVal = float64(*val)
 	default:
 		return

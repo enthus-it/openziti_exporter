@@ -13,21 +13,19 @@
 
 package collector
 
-import (
-	"github.com/openziti/ziti/ziti/cmd/api"
-)
+import "time"
 
-// LoginOptions are the flags for login commands
-type LoginOptions struct {
-	api.Options
-	Username     string
-	Password     string
-	Token        string
-	CaCert       string
-	ReadOnly     bool
-	Yes          bool
-	IgnoreConfig bool
-	ClientCert   string
-	ClientKey    string
-	ExtJwt       string
+// convertBool2Float returns a float64 from a bool variable
+func convertBool2Float(value bool) float64 {
+	if value {
+		return 1.0
+	}
+
+	return 0.0
+}
+
+// convertBool2Float returns a float64 from a RFC3339 string
+func convertRFC33339toUnix(value string) float64 {
+	t, _ := time.Parse(time.RFC3339, value)
+	return float64(t.Unix())
 }
