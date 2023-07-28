@@ -1,5 +1,7 @@
 # OpenZiti exporter
 
+[![GolangCI-Lint](https://github.com/enthus-it/openzit_exporter/actions/workflows/golangci-lint.yml/badge.svg)][golangci-lint]
+[![CircleCI](https://circleci.com/gh/enthus-it/openziti_exporter/tree/main.svg?style=shield)][circleci]
 [![Go Report Card](https://goreportcard.com/badge/github.com/enthus-it/openziti_exporter)][goreportcard]
 
 Prometheus exporter for collecting [OpenZiti Management Edge API](https://openziti.io/docs/reference/developer/api/) information,
@@ -78,4 +80,6 @@ The exporter supports TLS via a new web configuration file.
 
 See the [exporter-toolkit https package](https://github.com/prometheus/exporter-toolkit/blob/v0.1.0/https/README.md) for more details.
 
+[golangci-lint]: https://github.com/enthus-it/openziti_exporter/actions/workflows/golangci-lint.yml
+[circleci]: https://circleci.com/gh/enthus-it/openziti_exporter
 [goreportcard]: https://goreportcard.com/report/github.com/enthus-it/openziti_exporter
