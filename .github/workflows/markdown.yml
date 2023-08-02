@@ -1,0 +1,13 @@
+name: Markdown Lint
+on: 
+  push:
+    branches: main
+  pull_request:
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@main
+    - name: Lint Markdown
+      uses: actionshub/markdownlint@main
