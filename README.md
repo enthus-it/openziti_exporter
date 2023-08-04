@@ -1,6 +1,6 @@
 # OpenZiti exporter
 
-[![GolangCI-Lint](https://github.com/enthus-it/openzit_exporter/actions/workflows/golangci-lint.yml/badge.svg)][golangci-lint]
+[![GolangCI-Lint](https://github.com/enthus-it/openzit_exporter/workflows/golangci-lint/badge.svg?branch=main)][golangci-lint]
 [![CircleCI](https://circleci.com/gh/enthus-it/openziti_exporter/tree/main.svg?style=shield)][circleci]
 [![Go Report Card](https://goreportcard.com/badge/github.com/enthus-it/openziti_exporter)][goreportcard]
 
@@ -10,6 +10,19 @@ written in Go with pluggable metric collectors.
 ## Installation and Usage
 
 The `openziti_exporter` listens on HTTP port 10004 by default. See the `--help` output for more options.
+
+### OpenZiti Management Edge API configuration
+
+This exporter consumes the [OpenZiti Management Edge API](https://openziti.io/docs/reference/developer/api/edge-management-reference),
+and needs to be configured accordingly.
+
+Flag / Environment Variable         |  Description |
+------------------------------------|--------------|
+`--ziti.mgt.api` / `ZITI_MGMT_API`  | OpenZiti Edge Management API URL. |
+`--ziti.admin.username` / `ZITI_ADMIN_USER`  | OpenZiti Edge Management API Admin Username. |
+`--ziti.admin.password` / `ZITI_ADMIN_PASSWORD`  | OpenZiti Edge Management API Admin Password. |
+
+**NOTE**: If the User is not an Administrator, then no information will be returned by the API.
 
 ## Collectors
 
