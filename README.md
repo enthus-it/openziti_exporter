@@ -11,6 +11,17 @@ written in Go with pluggable metric collectors.
 
 The `openziti_exporter` listens on HTTP port 10004 by default. See the `--help` output for more options.
 
+### Helm
+
+A helm chart called `prometheus-openziti-exporter` is available at [enthus-it](https://enthus-it.github.io/helm-charts)
+
+```console
+    helm repo add enthus-it https://enthus-it.github.io/helm-charts
+    helm repo update
+    helm show values enthus-it/prometheus-openziti-exporter
+    helm install helm install prometheus-openziti-exporter enthus-it/prometheus-openziti-exporter
+```
+
 ### OpenZiti Management Edge API configuration
 
 This exporter consumes the [OpenZiti Management Edge API](https://openziti.io/docs/reference/developer/api/edge-management-reference),
