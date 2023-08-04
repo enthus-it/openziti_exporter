@@ -1,6 +1,6 @@
 # OpenZiti exporter
 
-[![GolangCI-Lint](https://github.com/enthus-it/openzit_exporter/workflows/golangci-lint/badge.svg?branch=main)][golangci-lint]
+[![GolangCI-Lint](https://github.com/enthus-it/openziti_exporter/workflows/golangci-lint/badge.svg?branch=main)][golangci-lint]
 [![CircleCI](https://circleci.com/gh/enthus-it/openziti_exporter/tree/main.svg?style=shield)][circleci]
 [![Go Report Card](https://goreportcard.com/badge/github.com/enthus-it/openziti_exporter)][goreportcard]
 
