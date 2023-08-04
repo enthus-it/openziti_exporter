@@ -38,7 +38,12 @@ jobs:
     # container build
     - run:
         name: Build
-        command: docker build -t $GHCR_IMAGE_NAME:latest -t $GHCR_IMAGE_NAME:$CIRCLE_BRANCH .
+        command: |
+          if [ -n "$CIRCLE_TAG" ]; then
+            docker build -t $GHCR_IMAGE_NAME:latest -t $GHCR_IMAGE_NAME:$CIRCLE_TAG .
+          else
+            docker build -t $GHCR_IMAGE_NAME:$CIRCLE_BRANCH .
+          fi
     - run:
         name: GHCR Login
         command: echo $GHCR_TOKEN | docker login ghcr.io -u $GHCR_USERNAME --password-stdin
