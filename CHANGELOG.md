@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v0.0.4 / unreleased
+## v0.0.4 / 2023-09-22
 
 * Add "/fabric/v1/links" collector
 * chore: Refactor exporter for consuming another API.
