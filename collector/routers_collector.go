@@ -28,6 +28,10 @@ type routersCollector struct {
 	options *LoginOptions
 }
 
+const (
+	routerSpace = "router"
+)
+
 func init() {
 	registerCollector("routers", defaultEnabled, newRoutersCollector)
 }
@@ -63,7 +67,8 @@ func (c *routersCollector) Update(ch chan<- prometheus.Metric) (err error) {
 	for i := range routers.Data {
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "router_online"),
+				prometheus.BuildFQName(namespace, routerSpace,
+					"online"),
 				"Router is currently online.",
 				[]string{"hostname", "role_attributes", "version"}, nil,
 			), prometheus.GaugeValue,
@@ -74,7 +79,8 @@ func (c *routersCollector) Update(ch chan<- prometheus.Metric) (err error) {
 		)
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "router_enabled"),
+				prometheus.BuildFQName(namespace, routerSpace,
+					"enabled"),
 				"Router is currently enabled.",
 				[]string{"hostname", "role_attributes", "version"}, nil,
 			), prometheus.GaugeValue,
@@ -85,7 +91,8 @@ func (c *routersCollector) Update(ch chan<- prometheus.Metric) (err error) {
 		)
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "router_tunneler_enabled"),
+				prometheus.BuildFQName(namespace, routerSpace,
+					"tunneler_enabled"),
 				"Router as tunneler enabled.",
 				[]string{"hostname", "role_attributes", "version"}, nil,
 			), prometheus.GaugeValue,
@@ -96,7 +103,8 @@ func (c *routersCollector) Update(ch chan<- prometheus.Metric) (err error) {
 		)
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "router_service_traversal_enabled"),
+				prometheus.BuildFQName(namespace, routerSpace,
+					"service_traversal_enabled"),
 				"Router let services traverse through.",
 				[]string{"hostname", "role_attributes", "version"}, nil,
 			), prometheus.GaugeValue,
@@ -107,7 +115,8 @@ func (c *routersCollector) Update(ch chan<- prometheus.Metric) (err error) {
 		)
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "router_sync_status"),
+				prometheus.BuildFQName(namespace, routerSpace,
+					"sync_status"),
 				"Router synchronization status.",
 				[]string{"hostname", "role_attributes", "version", "sync_status"}, nil,
 			), prometheus.GaugeValue,
@@ -131,7 +140,7 @@ func (o *LoginOptions) RunRouters() (Routers, error) {
 		json                            = jsoniter.ConfigCompatibleWithStandardLibrary
 	)
 
-	jsonBytes, err := edgeControllerAPICall(o, "/edge-routers", limit, offset)
+	jsonBytes, err := controllerAPICall(o, "edge_management", "/edge-routers", limit, offset)
 	if err != nil {
 		return routerStructTotal, err
 	}
@@ -149,7 +158,7 @@ func (o *LoginOptions) RunRouters() (Routers, error) {
 	for offset+limit < totalRouterCount {
 		offset += limit
 
-		jsonBytes, err := edgeControllerAPICall(o, "/edge-routers", limit, offset)
+		jsonBytes, err := controllerAPICall(o, "edge_management", "/edge-routers", limit, offset)
 		if err != nil {
 			return routerStructTotal, err
 		}

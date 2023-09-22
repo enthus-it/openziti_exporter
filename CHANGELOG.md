@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.0.4 / unreleased
+
+* Add "/fabric/v1/links" collector
+* chore: Refactor exporter for consuming another API.
+
 ## v0.0.3 / 2023-09-11
 
 * Update ziti from v0.29 to v0.30.3

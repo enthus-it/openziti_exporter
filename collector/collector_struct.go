@@ -21,20 +21,21 @@ import (
 // LoginOptions are the flags for login commands
 type LoginOptions struct {
 	api.Options
-	Username        string
-	Password        string
-	Host            string
-	HostReady       string
-	Token           string
-	Logger          log.Logger
-	CaCert          string
-	ReadOnly        bool
-	Yes             bool
-	IgnoreConfig    bool
-	ClientCert      string
-	ClientKey       string
-	ExtJwt          string
-	IdentTypeFilter []string
+	Username                   string
+	Password                   string
+	Host                       string
+	HostReadyEdgeManagementAPI string
+	HostReadyFabricAPI         string
+	Token                      string
+	Logger                     log.Logger
+	CaCert                     string
+	ReadOnly                   bool
+	Yes                        bool
+	IgnoreConfig               bool
+	ClientCert                 string
+	ClientKey                  string
+	ExtJwt                     string
+	IdentTypeFilter            []string
 }
 
 type LoginSession struct {

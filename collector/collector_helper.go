@@ -26,12 +26,22 @@ import (
 	"github.com/pkg/errors"
 )
 
-// edgeControllerAPICall will return all available identities
+// controllerAPICall will return a API call response
 // request.SetHeaderParam("zt-session", e.Token)
-func edgeControllerAPICall(o *LoginOptions, api string, limit, offset int) ([]byte, error) {
+func controllerAPICall(o *LoginOptions, api, endpoint string, limit, offset int) ([]byte, error) {
 	client := util.NewClient()
 	timeout := o.Timeout
 	verbose := o.Verbose
+	hostReady := ""
+
+	switch api {
+	case "edge_management":
+		hostReady = o.HostReadyEdgeManagementAPI
+	case "fabric":
+		hostReady = o.HostReadyFabricAPI
+	default:
+		return nil, fmt.Errorf("API not implemented %v", api)
+	}
 
 	cert := o.CaCert
 	if cert != "" {
@@ -46,16 +56,16 @@ func edgeControllerAPICall(o *LoginOptions, api string, limit, offset int) ([]by
 		SetQueryParam("offset", strconv.Itoa(offset)).
 		SetHeader("Content-Type", "application/json").
 		SetHeader("zt-session", o.Token).
-		Get(o.HostReady + api)
+		Get(hostReady + endpoint)
 
 	if err != nil {
 		// reset login token to force a new login
 		o.Token = ""
-		return nil, fmt.Errorf("unable to authenticate to %v. Error: %v", o.HostReady, err)
+		return nil, fmt.Errorf("unable to authenticate to %v. Error: %v", hostReady, err)
 	}
 
 	if resp.StatusCode() != http.StatusOK {
-		return nil, fmt.Errorf("unable to authenticate to %v. Status code: %v, Server returned: %v", o.HostReady, resp.Status(), util.PrettyPrintResponse(resp))
+		return nil, fmt.Errorf("unable to authenticate to %v. Status code: %v, Server returned: %v", hostReady, resp.Status(), util.PrettyPrintResponse(resp))
 	}
 
 	return resp.Body(), nil

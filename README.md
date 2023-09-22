@@ -25,13 +25,13 @@ A helm chart called `prometheus-openziti-exporter` is available at [enthus-it](h
 ### OpenZiti Management Edge API configuration
 
 This exporter consumes the [OpenZiti Management Edge API](https://openziti.io/docs/reference/developer/api/edge-management-reference),
-and needs to be configured accordingly.
+the [OpenZiti Fabric API](https://openziti.io/docs/reference/developer/api/fabric-api), and needs to be configured accordingly.
 
 Flag / Environment Variable         |  Description |
 ------------------------------------|--------------|
-`--ziti.mgt.api` / `ZITI_MGMT_API`  | OpenZiti Edge Management API URL. |
-`--ziti.admin.username` / `ZITI_ADMIN_USER`  | OpenZiti Edge Management API Admin Username. |
-`--ziti.admin.password` / `ZITI_ADMIN_PASSWORD`  | OpenZiti Edge Management API Admin Password. |
+`--ziti.mgt.api` / `ZITI_MGMT_API`  | OpenZiti  API basepath URL. |
+`--ziti.admin.username` / `ZITI_ADMIN_USER`  | OpenZiti Admin Username. |
+`--ziti.admin.password` / `ZITI_ADMIN_PASSWORD`  | OpenZiti API Admin Password. |
 
 **NOTE**: If the User is not an Administrator, then no information will be returned by the API.
 
@@ -48,6 +48,7 @@ To enable only some specific collector(s), use `--collector.disable-defaults --c
 
 Name     | Description |
 ---------|-------------|
+fabric_links | Exposes OpenZiti Fabric Links from the Fabric API. |
 identities | Exposes OpenZiti Identities from the Edge Management API. |
 routers | Exposes OpenZiti Edge-Routers from the Edge Management API. |
 

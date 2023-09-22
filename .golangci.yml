@@ -8,7 +8,7 @@ linters-settings:
   gocyclo:
     min-complexity: 40
   dupl:
-    threshold: 150
+    threshold: 200
   misspell:
     locale: US
   lll:

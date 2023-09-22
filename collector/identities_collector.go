@@ -40,6 +40,10 @@ type identitiesCollector struct {
 	options *LoginOptions
 }
 
+const (
+	identitySpace = "identity"
+)
+
 func init() {
 	registerCollector("identities", defaultEnabled, newIdentitiesCollector)
 }
@@ -101,7 +105,8 @@ func (c *identitiesCollector) Update(ch chan<- prometheus.Metric) (err error) {
 	for i := range identities.Data {
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "identity_has_api_session"),
+				prometheus.BuildFQName(namespace, identitySpace,
+					"has_api_session"),
 				"Identity has an API session active.",
 				[]string{"name", "type", "sdk_type", "sdk_version"}, nil,
 			), prometheus.GaugeValue,
@@ -113,7 +118,8 @@ func (c *identitiesCollector) Update(ch chan<- prometheus.Metric) (err error) {
 		)
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "identity_has_edge_router_connection"),
+				prometheus.BuildFQName(namespace, identitySpace,
+					"has_edge_router_connection"),
 				"Identity has an edge router connection active.",
 				[]string{"name", "type", "sdk_type", "sdk_version"}, nil,
 			), prometheus.GaugeValue,
@@ -125,7 +131,8 @@ func (c *identitiesCollector) Update(ch chan<- prometheus.Metric) (err error) {
 		)
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "identity_last_update_timestamp_seconds"),
+				prometheus.BuildFQName(namespace, identitySpace,
+					"last_update_timestamp_seconds"),
 				"Identity last update timestamp.",
 				[]string{"name", "type", "sdk_type", "sdk_version"}, nil,
 			), prometheus.GaugeValue,
@@ -163,6 +170,12 @@ func (o *LoginOptions) RunLogin() error {
 		return err
 	}
 
+	// Setup Fabric API
+	o.HostReadyFabricAPI, err = url.JoinPath(host, "fabric/v1")
+	if err != nil {
+		return err
+	}
+
 	if o.CaCert != "" {
 		if certAbs, err := filepath.Abs(o.CaCert); err == nil {
 			o.CaCert = certAbs
@@ -175,7 +188,7 @@ func (o *LoginOptions) RunLogin() error {
 		host += ctrlURL.Path
 	}
 
-	o.HostReady = host
+	o.HostReadyEdgeManagementAPI = host
 	data := map[string]interface{}{
 		"password": o.Password,
 		"username": o.Username,
@@ -186,7 +199,7 @@ func (o *LoginOptions) RunLogin() error {
 		return err
 	}
 
-	level.Debug(o.Logger).Log("msg", "Login", "options", o, "host", o.HostReady)
+	level.Debug(o.Logger).Log("msg", "Login", "options", o, "host", o.HostReadyEdgeManagementAPI)
 
 	jsonBytes, err := login(o, body)
 	if err != nil {
@@ -199,7 +212,7 @@ func (o *LoginOptions) RunLogin() error {
 	}
 
 	if loginStruct.Data.Token == "" {
-		return fmt.Errorf("no session token returned from login request to %v", o.HostReady)
+		return fmt.Errorf("no session token returned from login request to %v", o.HostReadyEdgeManagementAPI)
 	}
 
 	o.Token = loginStruct.Data.Token
@@ -218,7 +231,7 @@ func (o *LoginOptions) RunIdentities() (Identities, error) {
 		json                          = jsoniter.ConfigCompatibleWithStandardLibrary
 	)
 
-	jsonBytes, err := edgeControllerAPICall(o, "/identities", limit, offset)
+	jsonBytes, err := controllerAPICall(o, "edge_management", "/identities", limit, offset)
 	if err != nil {
 		return identStructTotal, err
 	}
@@ -241,7 +254,7 @@ func (o *LoginOptions) RunIdentities() (Identities, error) {
 	for offset+limit < totalIdentityCount {
 		offset += limit
 
-		jsonBytes, err := edgeControllerAPICall(o, "/identities", limit, offset)
+		jsonBytes, err := controllerAPICall(o, "edge_management", "/identities", limit, offset)
 		if err != nil {
 			return identStructTotal, err
 		}
@@ -421,14 +434,14 @@ func login(o *LoginOptions, authentication string) ([]byte, error) {
 		SetQueryParam("method", method).
 		SetHeader("Content-Type", "application/json").
 		SetBody(authentication).
-		Post(o.HostReady + "/authenticate")
+		Post(o.HostReadyEdgeManagementAPI + "/authenticate")
 
 	if err != nil {
-		return nil, fmt.Errorf("unable to authenticate to %v. Error: %v", o.HostReady, err)
+		return nil, fmt.Errorf("unable to authenticate to %v. Error: %v", o.HostReadyEdgeManagementAPI, err)
 	}
 
 	if resp.StatusCode() != http.StatusOK {
-		return nil, fmt.Errorf("unable to authenticate to %v. Status code: %v, Server returned: %v", o.HostReady, resp.Status(), util.PrettyPrintResponse(resp))
+		return nil, fmt.Errorf("unable to authenticate to %v. Status code: %v, Server returned: %v", o.HostReadyEdgeManagementAPI, resp.Status(), util.PrettyPrintResponse(resp))
 	}
 
 	return resp.Body(), nil
