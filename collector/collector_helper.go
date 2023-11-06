@@ -23,7 +23,6 @@ import (
 
 	"github.com/go-kit/log/level"
 	"github.com/openziti/ziti/ziti/util"
-	"github.com/pkg/errors"
 )
 
 // controllerAPICall will return a API call response
@@ -81,7 +80,7 @@ func (o *LoginOptions) WriteCert(id string, cert []byte) (string, error) {
 
 	certsDir := filepath.Join(cfgDir, "certs")
 	if err = os.MkdirAll(certsDir, rwx); err != nil {
-		return "", errors.Wrapf(err, "unable to create ziti certs dir %v", certsDir)
+		return "", fmt.Errorf("unable to create ziti certs dir %v: %w", certsDir, err)
 	}
 
 	certFile := filepath.Join(certsDir, id)
