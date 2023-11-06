@@ -24,13 +24,14 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 
+	"errors"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	"github.com/openziti/foundation/v2/term"
 	"github.com/openziti/ziti/ziti/cmd/api"
 	"github.com/openziti/ziti/ziti/cmd/common"
 	"github.com/openziti/ziti/ziti/util"
-	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 	"golang.org/x/exp/slices"
 )
@@ -161,7 +162,7 @@ func (o *LoginOptions) RunLogin() error {
 
 	ctrlURL, err := url.Parse(host)
 	if err != nil {
-		return errors.Wrap(err, "invalid controller URL")
+		return fmt.Errorf("invalid controller URL: %w", err)
 	}
 
 	host = ctrlURL.Scheme + "://" + ctrlURL.Host
@@ -304,7 +305,7 @@ func (o *LoginOptions) ConfigureCerts(host string, ctrlURL *url.URL) error {
 	if !isServerTrusted && o.CaCert == "" {
 		wellKnownCerts, certs, err := util.GetWellKnownCerts(host)
 		if err != nil {
-			return errors.Wrapf(err, "unable to retrieve server certificate authority from %v", host)
+			return fmt.Errorf("unable to retrieve server certificate authority from %v: %w", host, err)
 		}
 
 		certsTrusted, err := util.AreCertsTrusted(host, wellKnownCerts)
