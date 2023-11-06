@@ -10,7 +10,7 @@ require (
 	github.com/openziti/ziti v0.30.3
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.17.0
-	github.com/prometheus/common v0.44.0
+	github.com/prometheus/common v0.45.0
 	github.com/prometheus/exporter-toolkit v0.10.0
 	github.com/prometheus/procfs v0.12.0
 	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63
@@ -79,7 +79,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
+	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
 	github.com/michaelquigley/pfxlog v0.6.10 // indirect
 	github.com/miekg/pkcs11 v1.1.1 // indirect
@@ -139,7 +139,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.17.0 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/oauth2 v0.10.0 // indirect
+	golang.org/x/oauth2 v0.12.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/term v0.13.0 // indirect
