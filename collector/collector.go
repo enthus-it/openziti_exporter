@@ -42,6 +42,16 @@ var (
 		[]string{"collector"},
 		nil,
 	)
+	loginErrorsDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "login", "errors_total"),
+		"Total number of login errors by type.",
+		[]string{"type"}, nil,
+	)
+	loginSuccessDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "login", "success_total"),
+		"Total number of successful logins.",
+		nil, nil,
+	)
 )
 
 const (
@@ -54,6 +64,8 @@ var (
 	initiatedCollectorsMtx = sync.Mutex{}
 	initiatedCollectors    = make(map[string]Collector)
 	collectorState         = make(map[string]*bool)
+	zitiLoginErrors        = make(map[string]float64)
+	zitiLoginSuccess       float64
 	forcedCollectors       = map[string]bool{} // collectors which have been explicitly enabled or disabled
 )
 
@@ -162,6 +174,20 @@ func (n OpenZitiCollector) Collect(ch chan<- prometheus.Metric) {
 			wg.Done()
 		}(name, c)
 	}
+
+	// Expose OpenZiti login metrics
+	for key := range zitiLoginErrors {
+		ch <- prometheus.MustNewConstMetric(loginErrorsDesc,
+			prometheus.CounterValue,
+			zitiLoginErrors[key],
+			key,
+		)
+	}
+
+	ch <- prometheus.MustNewConstMetric(loginSuccessDesc,
+		prometheus.CounterValue,
+		zitiLoginSuccess,
+	)
 
 	wg.Wait()
 }
