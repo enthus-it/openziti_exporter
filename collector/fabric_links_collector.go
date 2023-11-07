@@ -14,6 +14,9 @@
 package collector
 
 import (
+	"errors"
+	"fmt"
+
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/go-kit/log"
@@ -49,13 +52,20 @@ func (c *fabricLinksCollector) Update(ch chan<- prometheus.Metric) (err error) {
 	if c.options == nil {
 		c.options, err = edgeAPILogin(c.logger)
 		if err != nil {
+			errString := fmt.Sprintf("%s", errors.Unwrap(err))
+			zitiLoginErrors[errString]++
+
 			return err
 		}
+		zitiLoginSuccess++
 	} else if c.options.Token == "" {
 		c.options, err = edgeAPILogin(c.logger)
 		if err != nil {
+			errString := fmt.Sprintf("%s", errors.Unwrap(err))
+			zitiLoginErrors[errString]++
 			return err
 		}
+		zitiLoginSuccess++
 	}
 
 	fabricLinks, err := c.options.RunFabricLinks()

@@ -14,6 +14,8 @@
 package collector
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"strings"
 
@@ -50,13 +52,20 @@ func (c *routersCollector) Update(ch chan<- prometheus.Metric) (err error) {
 	if c.options == nil {
 		c.options, err = edgeAPILogin(c.logger)
 		if err != nil {
+			errString := fmt.Sprintf("%s", errors.Unwrap(err))
+			zitiLoginErrors[errString]++
+
 			return err
 		}
+		zitiLoginSuccess++
 	} else if c.options.Token == "" {
 		c.options, err = edgeAPILogin(c.logger)
 		if err != nil {
+			errString := fmt.Sprintf("%s", errors.Unwrap(err))
+			zitiLoginErrors[errString]++
 			return err
 		}
+		zitiLoginSuccess++
 	}
 
 	routers, err := c.options.RunRouters()
