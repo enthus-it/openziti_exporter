@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.0.5 / 2023-11-07
+
+* Add new login counters,
+  1. `openziti_login_success_total`
+  1. `openziti_login_errors_total`
+* chore: Update vendoring and CI configuration.
+
 ## v0.0.4 / 2023-09-22
 
 * Add "/fabric/v1/links" collector
