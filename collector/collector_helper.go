@@ -64,6 +64,11 @@ func controllerAPICall(o *LoginOptions, api, endpoint string, limit, offset int)
 	}
 
 	if resp.StatusCode() != http.StatusOK {
+		if resp.StatusCode() == http.StatusUnauthorized {
+			// reset login token to force a new login
+			o.Token = ""
+		}
+
 		return nil, fmt.Errorf("unable to authenticate to %v. Status code: %v, Server returned: %v", hostReady, resp.Status(), util.PrettyPrintResponse(resp))
 	}
 
