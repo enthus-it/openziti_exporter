@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.0.6 / 2023-11-08
+
+* Force a new login when status code is 401
+
 ## v0.0.5 / 2023-11-07
 
 * Add new login counters,
