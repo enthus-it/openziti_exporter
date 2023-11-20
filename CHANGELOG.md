@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.0.7 / 2023-11-20
+
+* Update valid Identity Types from `user,device,service` to `default,router`
+
+**NOTE**: ziti-controller v0.30.2 or newer required!
+
 ## v0.0.6 / 2023-11-08
 
 * Force a new login when status code is 401
