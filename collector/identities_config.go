@@ -22,7 +22,7 @@ import (
 )
 
 var (
-	validIdentityTypes = []string{"user", "device", "service"}
+	validIdentityTypes = []string{"default", "router"}
 	zitiMgtAPI         = kingpin.Flag(
 		"ziti.mgt.api", "Ziti Management API.",
 	).Envar("ZITI_MGMT_API").Default("https://localhost:1281").String()
