@@ -3,7 +3,7 @@ module github.com/enthus-it/openziti_exporter
 go 1.20
 
 require (
-	github.com/alecthomas/kingpin/v2 v2.3.2
+	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/go-kit/log v0.2.1
 	github.com/json-iterator/go v1.1.12
 	github.com/openziti/foundation/v2 v2.0.33
