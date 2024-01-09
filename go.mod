@@ -8,7 +8,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/openziti/foundation/v2 v2.0.35
 	github.com/openziti/ziti v0.31.4
-	github.com/prometheus/client_golang v1.17.0
+	github.com/prometheus/client_golang v1.18.0
 	github.com/prometheus/common v0.45.0
 	github.com/prometheus/exporter-toolkit v0.10.0
 	github.com/prometheus/procfs v0.12.0
