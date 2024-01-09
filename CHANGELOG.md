@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.0.8 / 2024-01-09
+
+* Update go toolchain for go 1.21.x
+* Update go modules
+
 ## v0.0.7 / 2023-11-20
 
 * Update valid Identity Types from `user,device,service` to `default,router`
