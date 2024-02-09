@@ -19,7 +19,7 @@ A helm chart called `prometheus-openziti-exporter` is available at [enthus-it](h
     helm repo add enthus-it https://enthus-it.github.io/helm-charts
     helm repo update
     helm show values enthus-it/prometheus-openziti-exporter
-    helm install helm install prometheus-openziti-exporter enthus-it/prometheus-openziti-exporter
+    helm install prometheus-openziti-exporter enthus-it/prometheus-openziti-exporter
 ```
 
 ### OpenZiti Management Edge API configuration
