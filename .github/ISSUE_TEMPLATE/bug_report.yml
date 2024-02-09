@@ -1,0 +1,59 @@
+---
+name: Bug report
+description: Create a report to help us improve.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for opening a bug report for Openziti Exporter.
+
+  - type: textarea
+    attributes:
+      label: What did you do?
+      description: Please provide steps for us to reproduce this issue.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What did you expect to see?
+  - type: textarea
+    attributes:
+      label: What did you see instead? Under which circumstances?
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+  - type: input
+    attributes:
+      label: System information
+      description: insert output of `uname -srm` here, or operating system version
+      placeholder: e.g. Linux 5.16.15 x86_64
+  - type: textarea
+    attributes:
+      label: Openziti information
+      description: insert output of `ziti version` here, for getting the controller version
+      render: text
+  - type: textarea
+    attributes:
+      label: Openziti Exporter version
+      description: Insert output of `openziti_exporter --version` here.
+      render: text
+      placeholder: |
+        e.g. openziti_exporter, version 0.0.8 (branch: main, revision: 3061d56bd77be8c16cea9bc7e8df0b89753d60d9)
+          build user:       root@37609b3a0a21
+          build date:       20240110-07:31:41
+          go version:       go1.21.6
+          platform:         linux/amd64
+          tags:             netgo osusergo static_build
+  - type: textarea
+    attributes:
+      label: Openziti Exporter configuration file
+      description: Insert relevant configuration here. Don't forget to remove secrets.
+      render: yaml
+  - type: textarea
+    attributes:
+      label: Logs
+      description: Insert Openziti Exporter logs relevant to the issue here.
+      render: text
