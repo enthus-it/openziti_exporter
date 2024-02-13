@@ -9,7 +9,7 @@ require (
 	github.com/go-kit/log v0.2.1
 	github.com/json-iterator/go v1.1.12
 	github.com/openziti/foundation/v2 v2.0.37
-	github.com/openziti/ziti v0.32.1
+	github.com/openziti/ziti v0.32.2
 	github.com/prometheus/client_golang v1.18.0
 	github.com/prometheus/common v0.46.0
 	github.com/prometheus/exporter-toolkit v0.11.0
@@ -54,12 +54,12 @@ require (
 	github.com/go-openapi/spec v0.20.14 // indirect
 	github.com/go-openapi/strfmt v0.22.0 // indirect
 	github.com/go-openapi/swag v0.22.9 // indirect
-	github.com/go-openapi/validate v0.22.6 // indirect
+	github.com/go-openapi/validate v0.23.0 // indirect
 	github.com/go-resty/resty/v2 v2.11.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/uuid v1.5.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/handlers v1.5.2 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/gorilla/schema v1.2.1 // indirect
@@ -67,7 +67,7 @@ require (
 	github.com/gorilla/websocket v1.5.1 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/jedib0t/go-pretty/v6 v6.5.3 // indirect
+	github.com/jedib0t/go-pretty/v6 v6.5.4 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -93,15 +93,15 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
-	github.com/openziti/channel/v2 v2.0.117 // indirect
+	github.com/openziti/channel/v2 v2.0.119 // indirect
 	github.com/openziti/edge-api v0.26.10 // indirect
-	github.com/openziti/identity v1.0.69 // indirect
+	github.com/openziti/identity v1.0.70 // indirect
 	github.com/openziti/jwks v1.0.3 // indirect
-	github.com/openziti/metrics v1.2.43 // indirect
-	github.com/openziti/sdk-golang v0.22.21 // indirect
+	github.com/openziti/metrics v1.2.45 // indirect
+	github.com/openziti/sdk-golang v0.22.28 // indirect
 	github.com/openziti/secretstream v0.1.16 // indirect
-	github.com/openziti/storage v0.2.28 // indirect
-	github.com/openziti/transport/v2 v2.0.121 // indirect
+	github.com/openziti/storage v0.2.30 // indirect
+	github.com/openziti/transport/v2 v2.0.122 // indirect
 	github.com/openziti/x509-claims v1.0.3 // indirect
 	github.com/openziti/xweb/v2 v2.1.0 // indirect
 	github.com/orcaman/concurrent-map/v2 v2.0.1 // indirect
@@ -114,7 +114,7 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rs/cors v1.10.1 // indirect
-	github.com/shirou/gopsutil/v3 v3.23.12 // indirect
+	github.com/shirou/gopsutil/v3 v3.24.1 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
@@ -138,10 +138,10 @@ require (
 	go.opentelemetry.io/otel/metric v1.21.0 // indirect
 	go.opentelemetry.io/otel/trace v1.21.0 // indirect
 	go4.org v0.0.0-20180809161055-417644f6feb5 // indirect
-	golang.org/x/crypto v0.18.0 // indirect
-	golang.org/x/net v0.20.0 // indirect
+	golang.org/x/crypto v0.19.0 // indirect
+	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/oauth2 v0.16.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/term v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
