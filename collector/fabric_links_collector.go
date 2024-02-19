@@ -57,14 +57,17 @@ func (c *fabricLinksCollector) Update(ch chan<- prometheus.Metric) (err error) {
 
 			return err
 		}
+
 		zitiLoginSuccess++
 	} else if c.options.Token == "" {
 		c.options, err = edgeAPILogin(c.logger)
 		if err != nil {
 			errString := fmt.Sprintf("%s", errors.Unwrap(err))
 			zitiLoginErrors[errString]++
+
 			return err
 		}
+
 		zitiLoginSuccess++
 	}
 

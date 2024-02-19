@@ -108,12 +108,16 @@ func DisableDefaultCollectors() {
 // A new action function is needed for each collector flag because the ParseContext
 // does not contain information about which flag called the action.
 // See: https://github.com/alecthomas/kingpin/issues/294
+//
+//revive:disable:unused-parameter
 func collectorFlagAction(collector string) func(ctx *kingpin.ParseContext) error {
 	return func(ctx *kingpin.ParseContext) error {
 		forcedCollectors[collector] = true
 		return nil
 	}
 }
+
+//revive:enable:unused-parameter
 
 // NewOpenZitiCollector creates a new OpenZitiCollector.
 func NewOpenZitiCollector(logger log.Logger, options *LoginOptions, filters ...string) (*OpenZitiCollector, error) {
@@ -149,6 +153,7 @@ func NewOpenZitiCollector(logger log.Logger, options *LoginOptions, filters ...s
 			if err != nil {
 				return nil, err
 			}
+
 			collectors[key] = collector
 			initiatedCollectors[key] = collector
 		}
@@ -209,6 +214,7 @@ func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.L
 		success = 0
 	} else {
 		level.Debug(logger).Log("msg", "collector succeeded", "name", name, "duration_seconds", duration.Seconds())
+
 		success = 1
 	}
 	ch <- prometheus.MustNewConstMetric(scrapeDurationDesc, prometheus.GaugeValue, duration.Seconds(), name)

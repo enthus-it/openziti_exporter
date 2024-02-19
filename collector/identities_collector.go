@@ -94,14 +94,17 @@ func (c *identitiesCollector) Update(ch chan<- prometheus.Metric) (err error) {
 
 			return err
 		}
+
 		zitiLoginSuccess++
 	} else if c.options.Token == "" {
 		c.options, err = edgeAPILogin(c.logger)
 		if err != nil {
 			errString := fmt.Sprintf("%s", errors.Unwrap(err))
 			zitiLoginErrors[errString]++
+
 			return err
 		}
+
 		zitiLoginSuccess++
 	}
 
@@ -353,11 +356,13 @@ func (o *LoginOptions) ConfigureCerts(host string, ctrlURL *url.URL) error {
 			level.Info(o.Logger).Log("msg", "verified that server supplied certificates are trusted by server")
 			level.Info(o.Logger).Log("msg", "server supplied certificates", "count", len(certs))
 			importCerts := o.Yes
+
 			if !importCerts {
 				if importCerts, err = o.askYesNo("Trust server provided certificate authority [Y/N]: "); err != nil {
 					return err
 				}
 			}
+
 			if importCerts {
 				o.CaCert, err = o.WriteCert(ctrlURL.Hostname(), wellKnownCerts)
 				if err != nil {
@@ -372,6 +377,7 @@ func (o *LoginOptions) ConfigureCerts(host string, ctrlURL *url.URL) error {
 		if err != nil {
 			return err
 		}
+
 		if !override {
 			o.CaCert = ""
 		}
