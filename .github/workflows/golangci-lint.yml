@@ -19,9 +19,9 @@ jobs:
       - name: install Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.21.x
+          go-version: 1.22.x
       - name: Lint
         uses: golangci/golangci-lint-action@v4
         with:
-          version: v1.55.2
+          version: v1.56.2
           args: --timeout=5m
