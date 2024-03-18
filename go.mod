@@ -8,7 +8,7 @@ require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/go-kit/log v0.2.1
 	github.com/json-iterator/go v1.1.12
-	github.com/openziti/foundation/v2 v2.0.37
+	github.com/openziti/foundation/v2 v2.0.39
 	github.com/openziti/ziti v0.32.2
 	github.com/prometheus/client_golang v1.19.0
 	github.com/prometheus/common v0.50.0
@@ -121,7 +121,7 @@ require (
 	github.com/speps/go-hashids v2.0.0+incompatible // indirect
 	github.com/spf13/cobra v1.8.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
+	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect

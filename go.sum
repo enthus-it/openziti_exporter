@@ -397,8 +397,8 @@ github.com/openziti/channel/v2 v2.0.119 h1:stfSrnDqoTi78LMvQA3+NSivHjQnRrYKrgij5
 github.com/openziti/channel/v2 v2.0.119/go.mod h1:lSRJwqmbkE34DgXYEmUhVCzwcQcx65vZGE8nuBNK458=
 github.com/openziti/edge-api v0.26.10 h1:LEDuJHZsExi0PBVO9iVuIdZWJ7eFo/i4TJhXoSFmfOU=
 github.com/openziti/edge-api v0.26.10/go.mod h1:FQLjav9AfqxQYSL0xKPDZ/JWTSZXApkk7jM2/iczGXM=
-github.com/openziti/foundation/v2 v2.0.37 h1:7pa4vWrlwllEoLXaK2rx91AffLQJ8k5pvc92oWANavA=
-github.com/openziti/foundation/v2 v2.0.37/go.mod h1:2NxzCnJbMw35U9RrFcdEaiXdxIMfBHOUNPngpyhvKeY=
+github.com/openziti/foundation/v2 v2.0.39 h1:psv1cTgBErOME4K5TmxolUzz8VabJVhGygsAz6uXAQM=
+github.com/openziti/foundation/v2 v2.0.39/go.mod h1:38RikdtjvzDUALm3jT3PSOrU0bHCleRty6bHGdfFyUI=
 github.com/openziti/identity v1.0.70 h1:JNwtJHmIS0DcXookm2xuXyh4z92T1O21GQvuO8PmHWs=
 github.com/openziti/identity v1.0.70/go.mod h1:jsKBL4G1BsmDSCIfhK4jha5B3Sevgy1jyZq0GtFKhSk=
 github.com/openziti/jwks v1.0.3 h1:hf8wkb+Cg4nH/HM0KROFd7u+C3DkRVcFZJ7tDV+4icc=
@@ -501,8 +501,9 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
-github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
+github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
+github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
 github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569 h1:xzABM9let0HLLqFypcxvLmlvEciCHL7+Lv+4vwZqecI=
 github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569/go.mod h1:2Ly+NIftZN4de9zRmENdYbvPQeaVIYKWpLFStLFEBgI=
