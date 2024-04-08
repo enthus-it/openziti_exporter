@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.0.9 / 2024-04-08
+
+* Update go toolchain for go 1.22.x
+* Update go modules
+
 ## v0.0.8 / 2024-01-09
 
 * Update go toolchain for go 1.21.x
