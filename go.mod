@@ -9,7 +9,7 @@ require (
 	github.com/go-kit/log v0.2.1
 	github.com/json-iterator/go v1.1.12
 	github.com/openziti/foundation/v2 v2.0.42
-	github.com/openziti/ziti v1.0.0
+	github.com/openziti/ziti v1.1.0
 	github.com/prometheus/client_golang v1.19.0
 	github.com/prometheus/common v0.52.3
 	github.com/prometheus/exporter-toolkit v0.11.0
@@ -102,11 +102,11 @@ require (
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/openziti/channel/v2 v2.0.128 // indirect
-	github.com/openziti/edge-api v0.26.16 // indirect
+	github.com/openziti/edge-api v0.26.17 // indirect
 	github.com/openziti/identity v1.0.75 // indirect
 	github.com/openziti/jwks v1.0.3 // indirect
 	github.com/openziti/metrics v1.2.51 // indirect
-	github.com/openziti/sdk-golang v0.23.19 // indirect
+	github.com/openziti/sdk-golang v0.23.27 // indirect
 	github.com/openziti/secretstream v0.1.19 // indirect
 	github.com/openziti/storage v0.2.36 // indirect
 	github.com/openziti/transport/v2 v2.0.131 // indirect
@@ -141,9 +141,9 @@ require (
 	go.etcd.io/bbolt v1.3.9 // indirect
 	go.mongodb.org/mongo-driver v1.14.0 // indirect
 	go.mozilla.org/pkcs7 v0.0.0-20210826202110-33d05740a352 // indirect
-	go.opentelemetry.io/otel v1.24.0 // indirect
-	go.opentelemetry.io/otel/metric v1.24.0 // indirect
-	go.opentelemetry.io/otel/trace v1.24.0 // indirect
+	go.opentelemetry.io/otel v1.25.0 // indirect
+	go.opentelemetry.io/otel/metric v1.25.0 // indirect
+	go.opentelemetry.io/otel/trace v1.25.0 // indirect
 	go4.org v0.0.0-20180809161055-417644f6feb5 // indirect
 	golang.org/x/crypto v0.22.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
