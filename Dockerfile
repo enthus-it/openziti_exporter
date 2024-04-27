@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.licenses=Apache-2.0
 
 ARG ARCH="amd64"
 ARG OS="linux"
-COPY openziti_exporter /bin/openziti_exporter
+COPY .build/${OS}-${ARCH}/openziti_exporter /bin/openziti_exporter
 
 EXPOSE      10004
 USER        nobody

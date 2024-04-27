@@ -3,6 +3,9 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2.1
 
+orbs:
+  prometheus: prometheus/prometheus@0.17.1
+
 executors:
   golang:
     docker:
@@ -19,43 +22,115 @@ jobs:
     - run: pip3 install codespell
     - run: codespell --skip=".git,go.sum"
 
+  test:
+    executor: golang
+    steps:
+    - prometheus/setup_environment
+    - run: go mod download
+    - run: make
+    - prometheus/store_artifact:
+        file: openziti_exporter
   build:
+    machine:
+      image: ubuntu-2204:current
+    parallelism: 3
+    steps:
+    - prometheus/setup_environment
+    - run:
+        name: Run linuxkit/binfmt
+        command: |
+          docker run --privileged linuxkit/binfmt:v1.0.0
+    - run:
+        name: Build Linux
+        command: |
+          promu crossbuild -v --parallelism $CIRCLE_NODE_TOTAL --parallelism-thread $CIRCLE_NODE_INDEX
+    - run:
+        name: Build Darwin
+        command: |
+          promu --config .promu-cgo.yml crossbuild -v --parallelism $CIRCLE_NODE_TOTAL --parallelism-thread $CIRCLE_NODE_INDEX
+    - persist_to_workspace:
+        root: .
+        paths:
+        - .build
+    - store_artifacts:
+        path: .build
+        destination: /build
+
+  publish_main:
     executor: golang
     environment:
-    - GHCR_IMAGE_NAME: "ghcr.io/enthus-it/openziti_exporter"
+    - GHCR_REPO: "ghcr.io/enthus-it"
     steps:
-     # checkout the project
-    - checkout
-
-    # make and test
-    - run:
-        name: Binary Build
-        command: make
-
+    - prometheus/setup_environment
     - setup_remote_docker:
         version: edge
-        docker_layer_caching: true
-
-    # container build
     - run:
-        name: Build
+        name: Print docker version
+        command: docker version
+    - run:
+        name: Run linuxkit/binfmt
         command: |
-          if [ -n "$CIRCLE_TAG" ]; then
-            docker build -t $GHCR_IMAGE_NAME:latest -t $GHCR_IMAGE_NAME:$CIRCLE_TAG .
-          else
-            docker build -t $GHCR_IMAGE_NAME:$CIRCLE_BRANCH .
-          fi
+          docker run --privileged linuxkit/binfmt:v1.0.0
+    - attach_workspace:
+        at: .
+    - run:
+        name: Build docker images
+        command: make docker DOCKER_REPO=$GHCR_REPO
+    - run:
+        name: Print docker images
+        command: docker images
     - run:
         name: GHCR Login
-        command: echo $GHCR_TOKEN | docker login ghcr.io -u $GHCR_USERNAME --password-stdin
-    - run:
-        name: GHCR Push
         command: |
-          if [ -n "$CIRCLE_TAG" ]; then
-            docker push $GHCR_IMAGE_NAME:latest
-            docker push $GHCR_IMAGE_NAME:$CIRCLE_TAG
-          else
-            docker push $GHCR_IMAGE_NAME:$CIRCLE_BRANCH
+          echo $GHCR_TOKEN | docker login -u $GHCR_USERNAME --password-stdin ghcr.io
+    - run:
+        name: GHCR Publish
+        command: make docker-publish DOCKER_REPO=$GHCR_REPO
+    - run:
+        name: GHCR manifest
+        command: make docker-manifest DOCKER_REPO=$GHCR_REPO
+
+  publish_release:
+    executor: golang
+    environment:
+    - GHCR_REPO: "ghcr.io/enthus-it"
+    steps:
+    - prometheus/setup_environment
+    - setup_remote_docker:
+        version: edge
+    - run:
+        name: Print docker version
+        command: docker version
+    - run:
+        name: Run linuxkit/binfmt
+        command: |
+          docker run --privileged linuxkit/binfmt:v1.0.0
+    - attach_workspace:
+        at: .
+    - run:
+        name: Build docker images
+        command: |
+          make docker DOCKER_IMAGE_TAG="$CIRCLE_TAG" DOCKER_REPO=$GHCR_REPO
+    - run:
+        name: Print docker images
+        command: docker images
+    - run:
+        name: GHCR Login
+        command: |
+          echo $GHCR_TOKEN | docker login -u $GHCR_USERNAME --password-stdin ghcr.io
+    - run:
+        name: GHCR Publish
+        command: make docker-publish DOCKER_IMAGE_TAG="$CIRCLE_TAG" DOCKER_REPO=$GHCR_REPO
+    - run:
+        name: GHCR manifest
+        command: make docker-manifest DOCKER_IMAGE_TAG="$CIRCLE_TAG" DOCKER_REPO=$GHCR_REPO
+    - run:
+        name: GHCR tag and publish latest
+        command: |
+          if [[ "$CIRCLE_TAG" =~ ^v[0-9]+(\.[0-9]+){2}$ ]]; then
+            make docker-tag-latest DOCKER_IMAGE_TAG="$CIRCLE_TAG" DOCKER_REPO=$GHCR_REPO
+            make docker-publish DOCKER_IMAGE_TAG="latest" DOCKER_REPO=$GHCR_REPO
+            make docker-manifest DOCKER_IMAGE_TAG="latest" DOCKER_REPO=$GHCR_REPO
           fi
 
 workflows:
@@ -68,13 +143,32 @@ workflows:
             only: main
           tags:
             only: /.*/
+    - test:
+        # Install promu and build
+        filters:
+          tags:
+            only: /.*/
     - build:
         # This enable the environment variables
         context: org-global
         filters:
-          branches:
-            only:
-            - main
           tags:
-            only:
-            - /v[0-9]+(\.[0-9]+)*(-.*)*/
+            only: /.*/
+    - publish_main:
+        context: org-global
+        requires:
+        - test
+        - build
+        filters:
+          branches:
+            only: main
+    - publish_release:
+        context: org-global
+        requires:
+        - test
+        - build
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
