@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.0.10 / 2024-04-27
+
+* chore: Build multi-arch docker images
+* Update go modules
+
 ## v0.0.9 / 2024-04-08
 
 * Update go toolchain for go 1.22.x
