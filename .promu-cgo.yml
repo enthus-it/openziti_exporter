@@ -23,5 +23,3 @@ crossbuild:
     platforms:
         - darwin/amd64
         - darwin/arm64
-        - netbsd/amd64
-        - netbsd/386
