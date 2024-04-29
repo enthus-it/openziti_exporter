@@ -12,7 +12,7 @@ executors:
     - image: cimg/go:1.22.2
   python:
     docker:
-    - image: cimg/python:3.12
+    - image: cimg/python:3.12.3
 
 jobs:
   codespell:
