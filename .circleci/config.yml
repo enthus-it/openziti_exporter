@@ -9,7 +9,7 @@ orbs:
 executors:
   golang:
     docker:
-    - image: cimg/go:1.22.2
+    - image: cimg/go:1.22.3
   python:
     docker:
     - image: cimg/python:3.12.3
