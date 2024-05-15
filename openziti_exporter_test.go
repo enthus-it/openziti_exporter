@@ -16,6 +16,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -132,7 +133,7 @@ func runCommandAndTests(cmd *exec.Cmd, address string, fn func(pid int) error) e
 		time.Sleep(500 * time.Millisecond)
 
 		if cmd.Process == nil || i == 9 {
-			return fmt.Errorf("can't start command")
+			return errors.New("can't start command")
 		}
 	}
 
