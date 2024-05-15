@@ -78,7 +78,6 @@ linters:
     - gocyclo
     - gofmt
     - goimports
-    - gomnd
     - goprintffuncname
     - gosec
     - gosimple
@@ -86,9 +85,11 @@ linters:
     - ineffassign
     - lll
     - misspell
+    - mnd
     - nakedret
     - noctx
     - nolintlint
+    - perfsprint
     - revive
     - rowserrcheck
     - staticcheck

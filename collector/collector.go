@@ -17,6 +17,7 @@ package collector
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"sync"
 	"time"
 
@@ -77,9 +78,9 @@ func registerCollector(collector string, isDefaultEnabled bool, factory func(log
 		helpDefaultState = "disabled"
 	}
 
-	flagName := fmt.Sprintf("collector.%s", collector)
+	flagName := "collector." + collector
 	flagHelp := fmt.Sprintf("Enable the %s collector (default: %s).", collector, helpDefaultState)
-	defaultValue := fmt.Sprintf("%v", isDefaultEnabled)
+	defaultValue := strconv.FormatBool(isDefaultEnabled)
 
 	flag := kingpin.Flag(flagName, flagHelp).Default(defaultValue).Action(collectorFlagAction(collector)).Bool()
 	collectorState[collector] = flag
