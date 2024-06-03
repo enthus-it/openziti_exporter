@@ -13,7 +13,7 @@ require (
 	github.com/prometheus/client_golang v1.19.1
 	github.com/prometheus/common v0.53.0
 	github.com/prometheus/exporter-toolkit v0.11.0
-	github.com/prometheus/procfs v0.15.0
+	github.com/prometheus/procfs v0.15.1
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
 )
 
