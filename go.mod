@@ -8,7 +8,7 @@ require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/go-kit/log v0.2.1
 	github.com/json-iterator/go v1.1.12
-	github.com/openziti/foundation/v2 v2.0.45
+	github.com/openziti/foundation/v2 v2.0.46
 	github.com/openziti/ziti v1.1.2
 	github.com/prometheus/client_golang v1.19.1
 	github.com/prometheus/common v0.54.0
