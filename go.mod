@@ -11,7 +11,7 @@ require (
 	github.com/openziti/foundation/v2 v2.0.46
 	github.com/openziti/ziti v1.1.3
 	github.com/prometheus/client_golang v1.19.1
-	github.com/prometheus/common v0.54.0
+	github.com/prometheus/common v0.55.0
 	github.com/prometheus/exporter-toolkit v0.11.0
 	github.com/prometheus/procfs v0.15.1
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
@@ -97,6 +97,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/muhlemmer/gu v0.3.1 // indirect
+	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
@@ -145,14 +146,14 @@ require (
 	go.opentelemetry.io/otel/metric v1.26.0 // indirect
 	go.opentelemetry.io/otel/trace v1.26.0 // indirect
 	go4.org v0.0.0-20180809161055-417644f6feb5 // indirect
-	golang.org/x/crypto v0.23.0 // indirect
-	golang.org/x/net v0.25.0 // indirect
-	golang.org/x/oauth2 v0.20.0 // indirect
+	golang.org/x/crypto v0.24.0 // indirect
+	golang.org/x/net v0.26.0 // indirect
+	golang.org/x/oauth2 v0.21.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/term v0.20.0 // indirect
-	golang.org/x/text v0.15.0 // indirect
-	google.golang.org/protobuf v1.34.1 // indirect
+	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/term v0.21.0 // indirect
+	golang.org/x/text v0.16.0 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/AlecAivazis/survey.v1 v1.8.8 // indirect
 	gopkg.in/resty.v1 v1.12.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
