@@ -25,8 +25,9 @@ jobs:
   test:
     executor: golang
     steps:
-    - prometheus/setup_environment
+    - checkout
     - run: go mod download
+    - run: make promu
     - run: make
     - prometheus/store_artifact:
         file: openziti_exporter
@@ -35,7 +36,9 @@ jobs:
       image: ubuntu-2204:current
     parallelism: 3
     steps:
-    - prometheus/setup_environment
+    - checkout
+    - run: go mod download
+    - run: make promu
     - run:
         name: Run linuxkit/binfmt
         command: |
@@ -61,7 +64,9 @@ jobs:
     environment:
     - GHCR_REPO: "ghcr.io/enthus-it"
     steps:
-    - prometheus/setup_environment
+    - checkout
+    - run: go mod download
+    - run: make promu
     - setup_remote_docker:
         version: edge
     - run:
@@ -95,7 +100,9 @@ jobs:
     environment:
     - GHCR_REPO: "ghcr.io/enthus-it"
     steps:
-    - prometheus/setup_environment
+    - checkout
+    - run: go mod download
+    - run: make promu
     - setup_remote_docker:
         version: edge
     - run:
