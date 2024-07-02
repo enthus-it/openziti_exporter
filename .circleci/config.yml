@@ -3,9 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2.1
 
-orbs:
-  prometheus: prometheus/prometheus@0.17.1
-
 executors:
   golang:
     docker:
@@ -25,17 +22,22 @@ jobs:
   test:
     executor: golang
     steps:
-    - prometheus/setup_environment
+    - checkout
     - run: go mod download
+    - run: make promu
     - run: make
-    - prometheus/store_artifact:
-        file: openziti_exporter
+    - store_artifacts:
+        path: openziti_exporter
+        destination: /build/openziti_exporter
+    - run: rm -v openziti_exporter
   build:
     machine:
       image: ubuntu-2204:current
     parallelism: 3
     steps:
-    - prometheus/setup_environment
+    - checkout
+    - run: go mod download
+    - run: make promu
     - run:
         name: Run linuxkit/binfmt
         command: |
@@ -61,7 +63,9 @@ jobs:
     environment:
     - GHCR_REPO: "ghcr.io/enthus-it"
     steps:
-    - prometheus/setup_environment
+    - checkout
+    - run: go mod download
+    - run: make promu
     - setup_remote_docker:
         version: edge
     - run:
@@ -95,7 +99,9 @@ jobs:
     environment:
     - GHCR_REPO: "ghcr.io/enthus-it"
     steps:
-    - prometheus/setup_environment
+    - checkout
+    - run: go mod download
+    - run: make promu
     - setup_remote_docker:
         version: edge
     - run:
