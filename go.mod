@@ -9,7 +9,7 @@ require (
 	github.com/go-kit/log v0.2.1
 	github.com/json-iterator/go v1.1.12
 	github.com/openziti/foundation/v2 v2.0.47
-	github.com/openziti/ziti v1.1.4
+	github.com/openziti/ziti v1.1.5
 	github.com/prometheus/client_golang v1.19.1
 	github.com/prometheus/common v0.55.0
 	github.com/prometheus/exporter-toolkit v0.11.0
@@ -22,7 +22,7 @@ require (
 	github.com/Jeffail/gabs v1.4.0 // indirect
 	github.com/Jeffail/gabs/v2 v2.7.0 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
-	github.com/andybalholm/brotli v1.0.6 // indirect
+	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.1 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
@@ -102,17 +102,17 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
-	github.com/openziti/channel/v2 v2.0.133 // indirect
+	github.com/openziti/channel/v2 v2.0.136 // indirect
 	github.com/openziti/edge-api v0.26.20 // indirect
-	github.com/openziti/identity v1.0.80 // indirect
+	github.com/openziti/identity v1.0.81 // indirect
 	github.com/openziti/jwks v1.0.3 // indirect
 	github.com/openziti/metrics v1.2.56 // indirect
 	github.com/openziti/sdk-golang v0.23.38 // indirect
 	github.com/openziti/secretstream v0.1.21 // indirect
 	github.com/openziti/storage v0.2.45 // indirect
-	github.com/openziti/transport/v2 v2.0.136 // indirect
+	github.com/openziti/transport/v2 v2.0.138 // indirect
 	github.com/openziti/x509-claims v1.0.3 // indirect
-	github.com/openziti/xweb/v2 v2.1.0 // indirect
+	github.com/openziti/xweb/v2 v2.1.1 // indirect
 	github.com/orcaman/concurrent-map/v2 v2.0.1 // indirect
 	github.com/parallaxsecond/parsec-client-go v0.0.0-20221025095442-f0a77d263cf9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
