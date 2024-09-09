@@ -11,7 +11,7 @@ require (
 	github.com/openziti/foundation/v2 v2.0.48
 	github.com/openziti/ziti v1.1.9
 	github.com/prometheus/client_golang v1.20.2
-	github.com/prometheus/common v0.57.0
+	github.com/prometheus/common v0.59.1
 	github.com/prometheus/exporter-toolkit v0.11.0
 	github.com/prometheus/procfs v0.15.1
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
